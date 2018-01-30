@@ -259,13 +259,20 @@ module_clone()
 		quiet=-q
 	fi
 
+    echo module_clone"(sm_path=$1, name=$2, url=$3, reference=$4, depth=$5)"
+
 	gitdir=
 	gitdir_base=
 	base_name=$(dirname "$name")
 
+    echo base_name=$base_name
+
 	gitdir=$(git rev-parse --git-dir)
 	gitdir_base="$gitdir/modules/$base_name"
 	gitdir="$gitdir/modules/$name"
+
+    echo git_dir=$gitdir
+    echo git_dir_base=$gitdir_base
 
 	if test -d "$gitdir"
 	then
@@ -303,6 +310,7 @@ module_clone()
 
 	# Turn each leading "*/" component into "../"
 	rel=$(echo $b | sed -e 's|[^/][^/]*|..|g')
+    echo a=$a b=$b rel=$rel
 	echo "gitdir: $rel/$a" >"$sm_path/.git"
 
 	rel=$(echo $a | sed -e 's|[^/][^/]*|..|g')
